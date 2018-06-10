@@ -321,7 +321,7 @@
                             <Separator Margin="8,2" />
                             <MenuItem
                                 Header="Sign out"
-                                Command="{Binding SignOutCommand, Source={StaticResource ChatViewModel}}"/>
+                                Command="{Binding SignOutCommand, Source={StaticResource ChatViewModel}}" />
                         </ContextMenu>
                     </Setter.Value>
                 </Setter>
@@ -358,7 +358,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
                                     </BooleanAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -720,8 +720,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="27*" />
-            <RowDefinition Height="172*" />
+            <RowDefinition Height="52" />
+            <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -730,88 +730,82 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.RowSpan="3">
-            <Border BorderThickness="0,0,1,0" SnapsToDevicePixels="True"
-                    BorderBrush="{DynamicResource MaterialDesignDivider}">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="40" />
-                        </Grid.ColumnDefinitions>
+        <Grid Grid.RowSpan="3" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-                        <!--Profile-->
-                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                            <materialDesign:ClockItemButton
-                                x:Name="ProfileButton" Width="30" Height="30" Margin="8,5,0,5" 
-                                Background="BurlyWood" BorderBrush="GhostWhite" 
-                                Command="{Binding ChangeImageCommand, Source={StaticResource ChatViewModel}}">
-                                <Canvas x:Name="Photo" Height="30" Width="30">
-                                    <Canvas.Background>
-                                        <ImageBrush
-                                            ImageSource="{Binding Photo, Source={StaticResource ChatViewModel}}"/>
-                                    </Canvas.Background>
-                                </Canvas>
-                            </materialDesign:ClockItemButton>
+            <!--Profile-->
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <materialDesign:ClockItemButton
+                    x:Name="ProfileButton" Width="30" Height="30" Margin="8,5,0,5"
+                    Background="BurlyWood" BorderBrush="GhostWhite"
+                    Command="{Binding ChangeImageCommand, Source={StaticResource ChatViewModel}}">
+                    <Canvas x:Name="Photo" Height="30" Width="30">
+                        <Canvas.Background>
+                            <ImageBrush
+                                ImageSource="{Binding Photo, Source={StaticResource ChatViewModel}}" />
+                        </Canvas.Background>
+                    </Canvas>
+                </materialDesign:ClockItemButton>
 
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="8,5,0,5" Text="{Binding UserName, Source={StaticResource ChatViewModel}}"/>
-                        </StackPanel>
-                       
-                        <!--Settings-->
-                        <Button Grid.Row="0" Grid.Column="1" 
-                                Style="{StaticResource SettingsButtonStyle}" HorizontalAlignment="Right" />
+                <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Margin="8,5,0,5" Text="{Binding UserName, Source={StaticResource ChatViewModel}}" />
+            </StackPanel>
 
-                        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black"
-                                CornerRadius="3" Height="30" BorderThickness="1" Margin="8,0,0,0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+            <!--Settings-->
+            <Button Grid.Row="0" Grid.Column="1"
+                    Style="{StaticResource SettingsButtonStyle}" HorizontalAlignment="Right" />
 
-                                <Button Style="{DynamicResource MaterialDesignToolButton}"
-                                        Command="{Binding SearchCommand}" x:Name="SearchButton"
-                                        CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
-                                        Height="24" Width="24">
-                                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" Foreground="Black" />
-                                </Button>
+            <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black"
+                    CornerRadius="3" Height="30" BorderThickness="1" Margin="8,0,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                                <!--KeyDown="Search_OnKeyDown"-->
-                                <TextBox Grid.Column="1" Margin="5 0 0 0"
-                                         materialDesign:HintAssist.Hint="Search" x:Name="SearchBox"
-                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                         BorderThickness="0" VerticalAlignment="Center" Width="150" />
-                            </Grid>
-                        </Border>
+                    <Button Style="{DynamicResource MaterialDesignToolButton}"
+                            Command="{Binding SearchCommand}" x:Name="SearchButton"
+                            CommandParameter="{Binding Text, ElementName=SearchBox}"
+                            Height="24" Width="24">
+                        <materialDesign:PackIcon Kind="Magnify" Opacity=".56" Foreground="Black" />
+                    </Button>
 
-                        <Button Grid.Row="1" Grid.Column="1"
-                                Style="{StaticResource AddRoomButtonStyle}" FontFamily="Segoe UI Light"
-                                Command="{Binding ShowCreateRoomCommand, Source={StaticResource CreateRoomViewModel}}" />
-                    </Grid>
-                </StackPanel>
+                    <!--KeyDown="Search_OnKeyDown"-->
+                    <TextBox Grid.Column="1" Margin="5 0 0 0"
+                             materialDesign:HintAssist.Hint="Search" x:Name="SearchBox"
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                             BorderThickness="0" VerticalAlignment="Center" Width="150" />
+                </Grid>
             </Border>
 
-            <Border BorderThickness="0,0,1,0" SnapsToDevicePixels="True"
-                    BorderBrush="{DynamicResource MaterialDesignDivider}" Height="Auto" Margin="0,8,0,0"
-                    >
-                <ListBox x:Name="ListBoxRoom"
-                         ItemsSource="{Binding ListRoom, Source={StaticResource ListRoomViewModel}}"
-                         ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <local:RoomItem />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+            <Button Grid.Row="1" Grid.Column="1"
+                    Style="{StaticResource AddRoomButtonStyle}" FontFamily="Segoe UI Light"
+                    Command="{Binding ShowCreateRoomCommand, Source={StaticResource CreateRoomViewModel}}" />
 
-                    <!--<ListBox.ItemTemplate>
+            <ListBox
+                x:Name="ListBoxRoom"
+                ItemsSource="{Binding ListRoom, Source={StaticResource ListRoomViewModel}}"
+                Margin="0,8,0,0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top"
+                ScrollViewer.CanContentScroll="False"
+                Style="{StaticResource CustomListBox}">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <local:RoomItem />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <!--<ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -825,43 +819,41 @@
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>-->
-
-                    <!--ItemTemplate="{DynamicResource ParticipantsDataTemplate}"
+                <!--ItemTemplate="{DynamicResource ParticipantsDataTemplate}"
                      ItemContainerStyle="{DynamicResource ParticipantsListBoxItemStyle}"
                      SelectedItem="{Binding SelectedParticipant}"                     
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ScrollViewer.VerticalScrollBarVisibility="Auto">-->
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding ItemSelectedCommand, Source={StaticResource ListRoomViewModel}}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding ItemSelectedCommand, Source={StaticResource ChatViewModel}}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding RoomChangeCommand, Source={StaticResource BoardViewModel}}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding RoomChangeCommand, Source={StaticResource TaskViewModel}}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction
-                                Command="{Binding RoomChangeCommand, Source={StaticResource CallingViewModel}}"
-                                CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ListBox>
-            </Border>
 
-        </StackPanel>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding ItemSelectedCommand, Source={StaticResource ListRoomViewModel}}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding ItemSelectedCommand, Source={StaticResource ChatViewModel}}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding RoomChangeCommand, Source={StaticResource BoardViewModel}}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding RoomChangeCommand, Source={StaticResource TaskViewModel}}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding RoomChangeCommand, Source={StaticResource CallingViewModel}}"
+                            CommandParameter="{Binding SelectedItem, ElementName=ListBoxRoom}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+        </Grid>
 
         <Grid
             Grid.Column="1" Grid.Row="1"
@@ -881,7 +873,7 @@
             </Border>
 
             <!--Messages-->
-            <ItemsControl x:Name="MessagesItemsCtrl" Margin="0,5,0,0"
+            <ItemsControl x:Name="MessagesItemsCtrl" Margin="0,8,8,0"
                           ItemsSource="{Binding ListMessage, Source={StaticResource ChatViewModel}}"
                           ItemTemplate="{DynamicResource MessagesDataTemplate}"
                           ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
@@ -897,7 +889,7 @@
                 </ItemsControl.Template>
             </ItemsControl>
 
-            <GridSplitter Grid.Column="1" Name="SplitterChatPresentation"
+            <GridSplitter Grid.Column="1" x:Name="SplitterChatPresentation"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Stretch"
                           Background="Black"
@@ -1001,7 +993,7 @@
                             CommandParameter="{Binding ElementName=canvas}" />
 
                         <!--Clear active board-->
-                        
+
                         <Button
                             Grid.Column="1" Grid.Row="2"
                             Foreground="#FF6E6E6E"
@@ -1042,11 +1034,11 @@
             <!--Task-->
             <Border Grid.Column="4" Visibility="Visible">
                 <ListBox x:Name="lbTask"
-
                          ItemsSource="{Binding ListTask, Source={StaticResource TaskViewModel}}"
                          ScrollViewer.CanContentScroll="False"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         SelectedItem="{Binding SelectedTask, Source={StaticResource TaskViewModel}}">
+                         SelectedItem="{Binding SelectedTask, Source={StaticResource TaskViewModel}}"
+                         Style="{StaticResource CustomListBox}">
+
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Style.Triggers>
@@ -1059,7 +1051,7 @@
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <materialDesign:Card Width="200" Height="Auto">
+                            <materialDesign:Card Width="200" Height="Auto" Margin="8">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -1300,8 +1292,8 @@
                         CommandParameter="{Binding ElementName=PresentationBorder}" />
 
                 <Button x:Name="AddMemberButton" Grid.Column="4"
-                        Style="{DynamicResource AddMemberButtonStyle}" 
-                        Command="{Binding AddMemberCommand, Source={StaticResource ListRoomViewModel}}"/>
+                        Style="{DynamicResource AddMemberButtonStyle}"
+                        Command="{Binding AddMemberCommand, Source={StaticResource ListRoomViewModel}}" />
             </Grid>
         </Border>
 
