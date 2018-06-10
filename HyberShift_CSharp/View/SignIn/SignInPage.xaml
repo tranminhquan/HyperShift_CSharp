@@ -1,0 +1,64 @@
+﻿<fluentWpf:AcrylicWindow x:Class="HyberShift_CSharp.View.SignIn.SignInPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="SignIn" Height="584" Width="720"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:signIn="clr-namespace:HyberShift_CSharp.View.SignIn"
+        xmlns:hyberShiftCSharp="clr-namespace:HyberShift_CSharp"
+        xmlns:viewModel="clr-namespace:HyberShift_CSharp.ViewModel"
+        xmlns:fluentWpf="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        SnapsToDevicePixels="True">
+
+    <fluentWpf:AcrylicWindow.Background>
+        <ImageBrush ImageSource="/HyberShift_CSharp;component/Res/login_page.png" Stretch="UniformToFill"/>
+    </fluentWpf:AcrylicWindow.Background>
+
+    <fluentWpf:AcrylicWindow.Resources>
+        <!--<viewModel:LoginViewModel x:Key="LoginViewModel" />
+        <viewModel:RegisterViewModel x:Key="RegisterViewModel" />-->
+
+        <!--TMQ-->
+        <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+            <signIn:SignInControl />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:RegisterViewModel}">
+            <signIn:SignUpControl />
+        </DataTemplate>
+
+        <viewModel:SignInPageViewModel x:Key="SignInPageViewModel" />
+
+    </fluentWpf:AcrylicWindow.Resources>
+
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/HyberShift_CSharp;component/Res/login_page.png" Stretch="UniformToFill" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="145*" />
+            <RowDefinition Height="242*" />
+            <RowDefinition Height="166*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="353*" />
+            <ColumnDefinition Width="209*" />
+            <ColumnDefinition Width="66*" />
+        </Grid.ColumnDefinitions>
+
+        <!--TMQ-->
+        <ContentControl x:Name="Pages"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="{Binding SelectedViewModel, Source={StaticResource SignInPageViewModel}}" />
+    </Grid>
+</fluentWpf:AcrylicWindow>

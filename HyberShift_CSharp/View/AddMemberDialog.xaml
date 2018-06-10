@@ -1,0 +1,35 @@
+﻿<Window x:Class="HyberShift_CSharp.View.AddMemberDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HyberShift_CSharp.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="ToolWindow"
+        mc:Ignorable="d"
+        Title="AddMemberDialog" Height="220" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}">
+            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="Add members to room"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
+
+        <TextBox 
+            x:Name="txtMember"
+            Grid.Row="1" Grid.Column="1" Margin="8,16,11,16"
+            materialDesign:HintAssist.Hint="Email of Members (Ex: a@gmail.com, b@gmail.com"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+        <TextBlock Grid.Row="2" x:Name="tbNoice" Style="{DynamicResource MaterialDesignSubheadingTextBlock}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource AccentBrush}"/>
+
+        <Button x:Name="btnAdd" Grid.Row="3" Style="{StaticResource RaisedButton}" Width="300" Content="ADD" Click="btnAdd_Click"/>
+    </Grid>
+</Window>

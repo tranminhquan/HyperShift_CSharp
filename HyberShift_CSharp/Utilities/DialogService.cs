@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using HyberShift_CSharp.Model.Interface;
+using Microsoft.Win32;
+
+namespace HyberShift_CSharp.Utilities
+{
+    public class DialogService : IDialogService
+    {
+        public string OpenFile(string caption, string filter = "All files (*.*)|*.*")
+        {
+            OpenFileDialog diag = new OpenFileDialog();
+            diag.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            diag.Title = caption;
+            diag.Filter = filter;
+            diag.CheckFileExists = true;
+            diag.CheckPathExists = true;
+            diag.RestoreDirectory = true;
+
+            if (diag.ShowDialog() == true) return diag.FileName;
+            return string.Empty;
+        }
+
+        public bool ShowConfirmationRequest(string message, string caption = "")
+        {
+            var result = MessageBox.Show(message, caption, MessageBoxButton.OKCancel);
+            return result.HasFlag(MessageBoxResult.OK);
+        }
+
+        public void ShowNotification(string message, string caption = "")
+        {
+            MessageBox.Show(message, caption); ;
+        }
+    }
+}

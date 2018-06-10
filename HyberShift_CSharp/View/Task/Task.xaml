@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="HyberShift_CSharp.View.Task.Task"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HyberShift_CSharp.View.Task"
+             xmlns:viewmodel="clr-namespace:HyberShift_CSharp.ViewModel"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+
+    <materialDesign:Card Width="200" Height="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Title Task Name -->
+
+            <materialDesign:PackIcon Kind="{Binding TaskIcon}" Grid.Row="0" Grid.Column="0" 
+                                     Background="{StaticResource PrimaryHueMidBrush}" Width="40" Height="32"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{DynamicResource MaterialDesignTitleTextBlock}" 
+                       TextAlignment="Center" Background="{StaticResource PrimaryHueMidBrush}"
+                       Padding="0,5,5,0" Foreground="White" Text="{Binding Name}"/>
+
+
+            <!--Performer-->
+            <materialDesign:PackIcon Grid.Row="1" Grid.Column="0" 
+                                     Kind="Account" VerticalAlignment="Stretch"  
+                                     Margin="10,14,10,14" Padding="0,0,0,0" Width="20" Height="20"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="8,16,10.4,16" Grid.ColumnSpan="2"
+                       Text="{Binding Performer}"/>
+
+            <!--Description-->
+            <materialDesign:PackIcon Grid.Row="2" Grid.Column="0" 
+                                     Kind="NoteText" VerticalAlignment="Stretch" 
+                                     Margin="10,14,10,14" Padding="0,0,0,0" Width="20" Height="20"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Margin="8,16,10.4,16" Grid.ColumnSpan="2"
+                       Text="{Binding Description}"/>
+
+            <!--Start day-->
+            <materialDesign:PackIcon Grid.Row="3" Grid.Column="0" 
+                                     Kind="CalendarBlank" VerticalAlignment="Stretch" 
+                                     Margin="10,14,10,14" Padding="0,0,0,0" Width="20" Height="20"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Margin="8,16,10.4,16" Grid.ColumnSpan="2"
+                       Text="{Binding StartDay, StringFormat=dd-MM-yyyy}"/>
+
+            <!--End day-->
+            <materialDesign:PackIcon Grid.Row="4" Grid.Column="0" 
+                                     Kind="CalendarCheck" VerticalAlignment="Stretch" 
+                                     Margin="10,14,10,14" Padding="0,0,0,0" Width="20" Height="20"
+                                     Foreground="{StaticResource PrimaryBrush}"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Margin="8,16,10.4,16" Grid.ColumnSpan="2"
+                       Text="{Binding EndDay, StringFormat=dd-MM-yyyy}"/>
+
+            <!--Progress-->
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding ProgressText}" 
+                       Margin="5,5,5,5" Foreground="{StaticResource PrimaryBrush}"
+                       Style="{DynamicResource MaterialDesignBody2TextBlock}"
+                       TextAlignment="Center"/>
+            <ProgressBar Grid.Row="5" Grid.Column="1"
+                         Value="{Binding Progress}"
+                         Maximum="1" Minimum="0" 
+                         Margin="5,5,5,5"/>
+
+            <Button Grid.Row="6" Grid.Column="0" Style="{StaticResource RaisedButton}" 
+                    Padding="0,0,0,0" Width="20" Height="20"
+                    Content="{materialDesign:PackIcon Kind=Update}"
+                    Command="{Binding Path=DataContext.UpdateProgressCommand,RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                    />
+
+            <Slider x:Name="slider" Grid.Row="6" Grid.Column="1" Margin="10,5,10,5" 
+                    Minimum="0" Maximum="1"
+                    Value="{Binding Progress}"
+                    />
+
+            <!--<Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
+                <Button Style="{StaticResource PrimaryButton}">
+                    
+                </Button>
+            </Border>-->
+        </Grid>
+    </materialDesign:Card>
+</UserControl>
