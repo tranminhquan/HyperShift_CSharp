@@ -10,7 +10,7 @@ namespace HyberShift_CSharp.Utilities
     {
         public static void Log(string content)
         {
-            File.AppendAllText("log.txt", DateTime.Now + ": " + content + Environment.NewLine);
+            //File.AppendAllText("log.txt", DateTime.Now + ": " + content + Environment.NewLine);
         }
 
         public static void LogOutput(string content)
