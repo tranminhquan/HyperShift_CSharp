@@ -14,8 +14,8 @@ namespace HyberShift_CSharp.Utilities
 
         public SocketAPI()
         {
-            //socket = IO.Socket("http://hybershift-server-helloqwert12.c9users.io/");
-            socket = IO.Socket("https://hypershift-server.herokuapp.com/");
+            socket = IO.Socket("http://hybershift-server-helloqwert12.c9users.io/");
+            //socket = IO.Socket("https://hypershift-server.herokuapp.com/");
             isConnected = false;
             EstablishConnection();
         }

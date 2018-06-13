@@ -33,7 +33,7 @@
                                      Width="70" Height="70"/>
 
             <TextBlock x:Name="tbContent" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
-                       Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                       Style="{DynamicResource MaterialDesignBody1TextBlock}" TextWrapping="Wrap"/>
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

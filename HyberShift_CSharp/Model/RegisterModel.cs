@@ -52,7 +52,7 @@ namespace HyberShift_CSharp.Model
                 userjson.Add("phone", Info.Phone);
                 userjson.Add("avatarstring", Info.AvatarRef);
 
-                socket.Emit("register", userjson);
+                socket.Emit("new_register", userjson);
             }
             catch (JsonException e)
             {

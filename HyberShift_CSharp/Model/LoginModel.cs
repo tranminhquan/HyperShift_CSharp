@@ -8,6 +8,7 @@ using HyberShift_CSharp.Domain;
 using HyberShift_CSharp.Model.List;
 using HyberShift_CSharp.Utilities;
 using HyberShift_CSharp.View;
+using HyberShift_CSharp.View.Dialog;
 using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,11 +30,6 @@ namespace HyberShift_CSharp.Model
             InputPassword = "";
             listRoomModel = ListRoomModel.GetInstance();
             socket = SocketAPI.GetInstance().GetSocket();
-
-            socket.On(Socket.EVENT_CONNECT, () => { Debug.Log("Client connected to server"); })
-                .On(Socket.EVENT_DISCONNECT, () => { Debug.Log("Client disconnected to server"); });
-
-            socket.Connect();
         }
 
         // getter and setter
@@ -81,7 +77,7 @@ namespace HyberShift_CSharp.Model
             }
 
             Debug.Log("Email: " + InputEmail + ", Password: " + InputPassword);
-            socket.Emit("authentication", userjson);
+            socket.Emit("new_authentication", userjson);
 
             // [SAMPLE] Method for receiving event from socket server
             HandleOnSocketEvent();
@@ -92,37 +88,41 @@ namespace HyberShift_CSharp.Model
         {
             socket.On("authentication_result", args =>
             {
-                if (isAuthenticated) return;
-
-                isAuthenticated = true;
-                var data = (JObject)args;
-                if (data != null)
+                Application.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    Debug.Log("Authentication successed");
-                    Debug.Log(data.ToString());
+                    if (isAuthenticated) return;
 
-                    // [IMPORTANT] set info for userinfo
-                    userInfo.UserId = data.GetValue("id").ToString();
-                    var content = (JObject)data.GetValue("content");
-
-                    userInfo.AvatarRef = content.GetValue("avatarstring").ToString();
-                    userInfo.FullName = content.GetValue("fullname").ToString();
-                    userInfo.Email = content.GetValue("email").ToString();
-                    userInfo.Phone = content.GetValue("phone").ToString();
-
-                    Application.Current.Dispatcher.Invoke((Action)delegate
+                    isAuthenticated = true;
+                    var data = (JObject)args;
+                    if (data != null)
                     {
-                        // your code
-                        MainWindow mainWindow = new MainWindow();
-                        mainWindow.Show();
+                        Debug.Log("Authentication successed");
+                        Debug.Log(data.ToString());
 
-                        CloseWindowManager.CloseLoginWindow();
-                    });
-                }
-                else
-                {
-                    Debug.Log("Authentication failed");
-                }
+                        // [IMPORTANT] set info for userinfo
+                        userInfo.UserId = data.GetValue("id").ToString();
+                        var content = (JObject)data.GetValue("content");
+
+                        userInfo.AvatarRef = content.GetValue("avatarstring").ToString();
+                        userInfo.FullName = content.GetValue("fullname").ToString();
+                        userInfo.Email = content.GetValue("email").ToString();
+                        userInfo.Phone = content.GetValue("phone").ToString();
+
+                        Application.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            // your code
+                            MainWindow mainWindow = new MainWindow();
+                            mainWindow.Show();
+
+                            CloseWindowManager.CloseLoginWindow();
+                        });
+                    }
+                    else
+                    {
+                        isAuthenticated = false;
+                        (new MessageDialog("Sign in failed", "Opps! Your email or password is not correct. Please check again")).ShowDialog();
+                    }
+                });               
             }); 
         }
     }
