@@ -42,6 +42,8 @@ namespace HyberShift_CSharp.ViewModel
             TypingCommand = new DelegateCommand<TextBox>(HandleTyping);
             ChangeImageCommand = new DelegateCommand(ChangeImage);
             SignOutCommand = new DelegateCommand(SignOut);
+            ScrollChangeCommand = new DelegateCommand(OnScrollChange);
+            AboutCommand = new DelegateCommand(ShowAboutDialog);
             DisplayTyping = "Hidden";
             userInfo = UserInfo.GetInstance();
             HandleSocket();
@@ -76,6 +78,8 @@ namespace HyberShift_CSharp.ViewModel
         public DelegateCommand<TextBox> TypingCommand { get; set; }
         public DelegateCommand ChangeImageCommand { get; set; }
         public DelegateCommand SignOutCommand { get; set; }
+        public DelegateCommand ScrollChangeCommand { get; set; }
+        public DelegateCommand AboutCommand { get; set; }
         public ObservableCollection<MessageModel> ListMessage
         {
             get { return listMessageModel.List; }
@@ -221,6 +225,16 @@ namespace HyberShift_CSharp.ViewModel
                 CloseWindowManager.CloseMainWindow();
             });
             confirmDialog.Show();
+        }
+
+        public void ShowAboutDialog()
+        {
+            (new AboutDialog()).ShowDialog();
+        }
+
+        private void OnScrollChange()
+        {
+            Debug.LogOutput("Scroll changed");
         }
 
         private void HandleSocket()

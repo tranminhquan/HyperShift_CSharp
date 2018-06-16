@@ -23,6 +23,7 @@ using HyberShift_CSharp.View.Dialog;
 using Microsoft.Win32;
 using Xceed.Wpf.Toolkit;
 using Image = System.Drawing.Image;
+using System.ComponentModel;
 
 namespace HyberShift_CSharp.ViewModel
 {
@@ -48,6 +49,7 @@ namespace HyberShift_CSharp.ViewModel
         public DelegateCommand<object> CanvasChangeCommand { get; set; }
 
         //presentation
+        public string ProgressVisibility { get; set; }
         public DelegateCommand OpenPresentationCommand { get; set; }
         public DelegateCommand<Button> LeftSlideCommand { get; set; }
         public DelegateCommand<Button> RightSlideCommand { get; set; }
@@ -89,7 +91,8 @@ namespace HyberShift_CSharp.ViewModel
             listPointModel = new ListPointModel();
             SelectedColor = Color.FromRgb(0, 0, 0);
             Thickness = 5;
-      
+
+            ProgressVisibility = "Collapsed";
             MouseDownCommand = new DelegateCommand<object>(OnMouseDown);
             MouseMoveCommand = new DelegateCommand<object>(OnMouseMove);
             MouseUpCommand = new DelegateCommand<object>(OnMouseUp);
@@ -190,6 +193,8 @@ namespace HyberShift_CSharp.ViewModel
 
             ThreadStart starter = () =>
             {
+                ProgressVisibility = "Visible";
+                NotifyChanged("ProgressVisibility");
                 base64Slide.Clear();
                 base64Slide = presentation.LoadAndExportBase64(path);
             };
@@ -207,15 +212,55 @@ namespace HyberShift_CSharp.ViewModel
                 data.Add("room_id", currentRoom.ID);
                 data.Add("slide", base64Slide[slideIndex]);
                 socket.Emit("new_slide", data);
-
-                
-
                 Debug.LogOutput("Emited new slide");
+                ProgressVisibility = "Collapsed";
+                NotifyChanged("ProgressVisibility");
             };
 
             Thread thread = new Thread(starter) { IsBackground = true };
             thread.Start();
+
+
+
+            //BackgroundWorker worker = new BackgroundWorker();
+            //worker.WorkerReportsProgress = true;
+            //worker.DoWork += LoadPresentationSlide;
+            //worker.ProgressChanged += UpdateProgressBar;
+
+            //worker.RunWorkerAsync();
         }
+
+        //private void LoadPresentationSlide(object sender, DoWorkEventArgs e)
+        //{
+        //    string path = dialogService.OpenFile("Choose presentation file", "Presentation (.pptx, .ppt)|*.pptx;*.ppt");
+
+        //    if (path == "")
+        //        return;
+
+        //    // Show progress bar
+        //    ProgressVisibility = "Visible";
+        //    base64Slide.Clear();
+        //    base64Slide = presentation.LoadAndExportBase64(path);
+        //    Debug.LogOutput("Thread done");
+
+        //    // init first slide
+        //    slideIndex = 0;
+
+        //    // emit slide
+        //    JObject data = new JObject();
+        //    data.Add("room_id", currentRoom.ID);
+        //    data.Add("slide", base64Slide[slideIndex]);
+        //    socket.Emit("new_slide", data);
+        //    Debug.LogOutput("Emited new slide");
+
+        //    // Collapsed progress bar
+        //    ProgressVisibility = "Collapsed";
+        //}
+
+        //private void UpdateProgressBar(object sender, ProgressChangedEventArgs e)
+        //{
+
+        //}
 
         public void ShowPresenation(Border border)//, GridSplitter gridSplitter)
         {

@@ -1,0 +1,31 @@
+﻿<Window x:Class="HyberShift_CSharp.View.IntroWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HyberShift_CSharp.View"
+        WindowStyle="None"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="IntroWindow" Height="200" Width="800"
+        Background="{StaticResource AccentBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Style="{DynamicResource MaterialDesignDisplay3TextBlock}" Text="HyperShift"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource PrimaryBrush}"/>
+
+        <Separator Grid.Row="1" Margin="100,0,100,0" Foreground="{StaticResource PrimaryBrush}"/>
+
+        <TextBlock Grid.Row="2" Style="{DynamicResource MaterialDesignHeadlineTextBlock}" Text="Developed with passion by Absoluke team"
+                   FontStyle="Oblique" Margin="10"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,45 @@
+﻿<Window x:Class="HyberShift_CSharp.View.Dialog.AboutDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HyberShift_CSharp.View.Dialog"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Title="AboutDialog" Height="370" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}">
+            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="White" Text="About"/>
+        </Border>
+
+        <TextBlock Style="{DynamicResource MaterialDesignBody1TextBlock}" Grid.Row="1"
+                   Margin="20" TextWrapping="Wrap">
+            HyperShift is an application supports team communication. This project is
+            developed for Advanced Software Engineering subject assigment.<LineBreak/>
+            <LineBreak/>
+            <Separator Width="450"/>
+            <LineBreak/>
+            Developed with passion by Absoluke Team <LineBreak/>
+            Authors:
+            <LineBreak/>
+            Trần Minh Quân - Student at UIT-VNU HCM <LineBreak/>
+            Email: tranminhquan1201@gmail.com <LineBreak/>
+            <LineBreak/>
+            Võ Anh Kiệt - Student at UIT-VNU HCM <LineBreak/>
+            Email: geforce2409@gmail.com<LineBreak/>
+            <LineBreak/>
+            Đào Nguyên Quân - Student at UIT-VNU HCM <LineBreak/>
+            Email: daonguyenquan@gmail.com<LineBreak/>
+        </TextBlock>
+
+        <Button x:Name="btnOK" Grid.Row="2" Style="{StaticResource PrimaryButton}" Content="OK" Width="100" Click="btnOK_Click"/>
+    </Grid>
+</Window>

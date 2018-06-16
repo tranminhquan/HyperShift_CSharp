@@ -322,6 +322,9 @@
                             <MenuItem
                                 Header="Sign out"
                                 Command="{Binding SignOutCommand, Source={StaticResource ChatViewModel}}" />
+                            <MenuItem
+                                Header="About"
+                                Command="{Binding AboutCommand, Source={StaticResource ChatViewModel}}"/>
                         </ContextMenu>
                     </Setter.Value>
                 </Setter>
@@ -876,15 +879,22 @@
             <ItemsControl x:Name="MessagesItemsCtrl" Margin="0,8,8,0"
                           ItemsSource="{Binding ListMessage, Source={StaticResource ChatViewModel}}"
                           ItemTemplate="{DynamicResource MessagesDataTemplate}"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.ColumnSpan="2">
                 <i:Interaction.Behaviors>
                     <utilities:BringNewItemIntoViewBehavior />
                 </i:Interaction.Behaviors>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ScrollChanged">
+                        <i:InvokeCommandAction Command="{Binding ScrollChangeCommand, Source={StaticResource ChatViewModel}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ItemsControl.Template>
+                    
                     <ControlTemplate TargetType="{x:Type ItemsControl}">
                         <ScrollViewer Style="{StaticResource CustomScrollViewer}">
                             <ItemsPresenter />
                         </ScrollViewer>
+                        
                     </ControlTemplate>
                 </ItemsControl.Template>
             </ItemsControl>
@@ -922,6 +932,9 @@
                             Grid.RowSpan="3" Grid.ColumnSpan="4"
                             Source="{Binding Photo, Converter={StaticResource ByteBmpSrcConverter},
                             TargetNullValue={StaticResource BlankImage}}" Stretch="UniformToFill"/>-->
+                        <ProgressBar Grid.Row="1" Grid.ColumnSpan="4" Width="200"
+                                     Visibility="{Binding ProgressVisibility, Source={StaticResource BoardViewModel}}"
+                                     Minimum="0" Maximum="100"  IsIndeterminate="True"/>
 
                         <Canvas
                             x:Name="canvas"
@@ -970,7 +983,6 @@
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
-
                         </Canvas>
 
                         <xctk:ColorPicker

@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="SignIn" Height="584" Width="720"
+        WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:signIn="clr-namespace:HyberShift_CSharp.View.SignIn"
         xmlns:hyberShiftCSharp="clr-namespace:HyberShift_CSharp"
         xmlns:viewModel="clr-namespace:HyberShift_CSharp.ViewModel"
+        xmlns:utilities="clr-namespace:HyberShift_CSharp.Utilities"
         xmlns:fluentWpf="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -35,7 +37,9 @@
             <signIn:SignUpControl />
         </DataTemplate>
 
-        <viewModel:SignInPageViewModel x:Key="SignInPageViewModel" />
+        <viewModel:SignInPageViewModel x:Key="SignInPageViewModel"/>
+
+        <viewModel:StatusViewModel x:Key="StatusViewModel"/>
 
     </fluentWpf:AcrylicWindow.Resources>
 
@@ -48,6 +52,7 @@
             <RowDefinition Height="145*" />
             <RowDefinition Height="242*" />
             <RowDefinition Height="166*" />
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="353*" />
@@ -60,5 +65,10 @@
                         Grid.Column="1"
                         Grid.Row="1"
                         Content="{Binding SelectedViewModel, Source={StaticResource SignInPageViewModel}}" />
+        
+        <!--Status-->
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="3" Style="{DynamicResource MaterialDesignCaptionTextBlock}" 
+                   VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,0"
+                   FontStyle="Italic" Foreground="{StaticResource PrimaryBrush}" Text="{Binding Status, Source={StaticResource StatusViewModel}}"/>
     </Grid>
 </fluentWpf:AcrylicWindow>
