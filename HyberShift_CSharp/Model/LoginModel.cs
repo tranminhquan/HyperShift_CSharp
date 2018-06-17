@@ -123,7 +123,14 @@ namespace HyberShift_CSharp.Model
                         (new MessageDialog("Sign in failed", "Opps! Your email or password is not correct. Please check again")).ShowDialog();
                     }
                 });               
-            }); 
+            });
+
+            socket.On("history", (args) =>
+            {
+                JObject data = (JObject)args;
+                HistoryModel.GetInstance().LastSignOut = Convert.ToInt64(data.GetValue("last_sign_out"));
+                Debug.LogOutput("Last sign out: " + HistoryModel.GetInstance().LastSignOut);
+            });
         }
     }
 }

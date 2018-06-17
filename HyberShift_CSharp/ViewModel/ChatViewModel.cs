@@ -165,36 +165,43 @@ namespace HyberShift_CSharp.ViewModel
         // method
         public void SendMessage()
         {
-            if (Message.Trim().Length == 0)
-                return;
-
-            // Get name of the user from server
-            var msgjson = new JObject();
             try
             {
-                //msgjson.Add("imgstring", userInfo.AvatarRef);
-                msgjson.Add("imgstring", userInfo.AvatarRef);
-                msgjson.Add("sender", userInfo.FullName);
-                msgjson.Add("message", Message);
-                msgjson.Add("timestamp", DateTime.Now.Ticks);
-                msgjson.Add("filename", "null");
-                msgjson.Add("filestring", "null");
+                if (Message.Trim().Length == 0)
+                    return;
 
-                if (currentRoom == null)
-                    msgjson.Add("id", "public");
-                else
-                    msgjson.Add("id", currentRoom.ID);
+                // Get name of the user from server
+                var msgjson = new JObject();
+                try
+                {
+                    //msgjson.Add("imgstring", userInfo.AvatarRef);
+                    msgjson.Add("imgstring", userInfo.AvatarRef);
+                    msgjson.Add("sender", userInfo.FullName);
+                    msgjson.Add("message", Message);
+                    msgjson.Add("timestamp", DateTime.Now.Ticks);
+                    msgjson.Add("filename", "null");
+                    msgjson.Add("filestring", "null");
 
-                // Emit to server
-                socket.Emit("new_message", msgjson);
+                    if (currentRoom == null)
+                        msgjson.Add("id", "public");
+                    else
+                        msgjson.Add("id", currentRoom.ID);
+
+                    // Emit to server
+                    socket.Emit("new_message", msgjson);
+                }
+                catch (JsonException e)
+                {
+                    Debug.LogOutput(e.ToString());
+                }
+
+                Message = "";
+                NotifyChanged("Message");
             }
-            catch (JsonException e)
-            {	
-                Debug.LogOutput(e.ToString());
+            catch
+            {
+                return;
             }
-
-            Message = "";
-            NotifyChanged("Message");
         }
 
         public void ChangeImage()
@@ -269,6 +276,16 @@ namespace HyberShift_CSharp.ViewModel
                             timestamp);
                         listMessageModel.AddWithCheck(msg, "MessageID");
 
+                        // if new message when user sign out, then notify
+                        if (timestamp > HistoryModel.GetInstance().LastSignOut && HistoryModel.GetInstance().LastSignOut != 0) 
+                        {
+                            // find room has the id
+                            int index = ListRoomModel.GetInstance().GetIndexByValue("ID", id);
+                            ListRoomModel.GetInstance().List[index].DisplayNewMessage = "Visible";
+                            ListRoomModel.GetInstance().List[index].NotifyChanged("DisplayNewMessage");
+                            ListRoomModel.GetInstance().NotifyChanged("List");
+                            HistoryModel.GetInstance().LastSignOut = 0;
+                        }
                         Debug.LogOutput("Room: " + currentRoom.Name + " Message >> " + msg.Message);
                     }               
                 });

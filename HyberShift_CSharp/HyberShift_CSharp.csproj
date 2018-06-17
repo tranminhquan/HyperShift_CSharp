@@ -144,6 +144,7 @@
     <Compile Include="Model\EllipseModel.cs" />
     <Compile Include="Model\Enum\CallingState.cs" />
     <Compile Include="Model\Enum\TaskType.cs" />
+    <Compile Include="Model\HistoryModel.cs" />
     <Compile Include="Model\Interface\ICanvas.cs" />
     <Compile Include="Model\Interface\IDialogService.cs" />
     <Compile Include="Model\List\ListMessageModel.cs" />

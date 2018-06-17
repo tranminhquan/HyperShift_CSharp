@@ -100,6 +100,12 @@ namespace HyberShift_CSharp.ViewModel
                 });
             });
 
+            socket.On("user_added", () =>
+            {
+                Debug.LogOutput("Other user add you to room");
+                socket.Emit("room_request", UserInfo.GetInstance().UserId);
+            });
+
             
         }
 
